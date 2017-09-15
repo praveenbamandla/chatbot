@@ -152,9 +152,10 @@
 
 				$('#exportMessage').click(function(){
 					
-					var pdf = new jsPDF('p', 'pt', 'letter');
+					var pdf = new jsPDF('p', 'pt', 'a4');
 					var options = {
-						background: '#fff' //background is transparent if you don't set it, which turns it black for some reason.
+						background: '#fff', //background is transparent if you don't set it, which turns it black for some reason.
+						pagesplit: true
 					};
 					pdf.addHTML($('#conversationBox')[0], options, function () {
 							pdf.save('conversations.pdf');
