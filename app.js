@@ -68,7 +68,7 @@ var getTransferDetails = function(input) {
 		transferRequest.to = input.replace('transfer to ','').replace('to ','').replace('send to ','').split(' ')[0];		
 	}
 	
-	if(transferRequest.amount==0 || transferRequest.expected=='amount') {
+	if( (transferRequest.amount==0 && transferRequest.expected!='toAccount') || transferRequest.expected=='amount') {
 		transferRequest.amount = Number(input.replace(/[^0-9\.-]+/g,""));
 		transferRequest.valid = (transferRequest.amount!=0 && transferRequest.amount<=account.balance);			
 	}
@@ -101,9 +101,9 @@ var getTransferDetails = function(input) {
 	
 	if(input=='cancel' || (transferRequest.to!='' && transferRequest.valid)) {
 		
-		
-		var msg =  'transfer successful! ('+transferRequest.amount+' to '+transferRequest.to+'). Your reference number is 3432244';
 		account.balance-=transferRequest.amount;
+		var msg =  'transfer successful! ('+transferRequest.amount+' to '+transferRequest.to+'). Your reference number is 3432244. Remaining balance is '+account.balance;
+		
 		transferRequest = {
 			inprogress:false,
 			expected:'',  // can be amount ro toAccount
@@ -158,7 +158,7 @@ app.post('/submit-message', function(req, res){
 		reply = getTransferDetails(req.body.message);
 		//console.log(transferRequest);
 	}
-	
+	console.log(transferRequest,type);
 	res.json({inputMessage:req.body.message, replyMessage:reply==''?replies[type]:reply});
 });
 
