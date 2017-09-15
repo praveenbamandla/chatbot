@@ -3,9 +3,31 @@
 	<head>
 		<meta charset="UTF-8" />
 		<title>Chat Bot</title>
-		
+		<link rel="stylesheet" type="text/css" href="./assets/bootstrap.min.css" />
+		<style>
+		</style>
 	</head>
 	<body>
-		Hello .. Server Launched successfully.
+		<div class="container">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<span class="title">Chatbot Assistance</span>
+					<button type="button" class="btn btn-default" id="clearMessage">Clear</button>
+					<button type="button" class="btn btn-default" id="exportMessage">Export</button>
+				</div>
+				<div class="panel-body" id="conversationBox"></div>
+			</div>
+			<div class="input-group">
+				<input type="text" class="form-control width100" id="inputMessage" />
+				<span class="input-group-btn">
+					<button type="button" class="btn btn-default" id="goMessage">Go</button>
+				</span>
+			</div>
+		</div>
+		<div id="editor"></div>
+		<script src="./assets/jquery.min.js"></script>
+		<script src="./assets/jspdf.min.js"></script>
+		<script type="text/javascript">
+		</script>
 	</body>
 </html>
