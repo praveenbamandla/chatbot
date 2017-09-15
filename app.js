@@ -2,6 +2,7 @@ var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
 var BrainJSClassifier = require('natural-brain');
+//var player = require('play-sound')( opts = {player: "D:\\mpg123\\out.exe"});
 
 // Classiy
 var app = express();
@@ -43,9 +44,17 @@ app.get('/assets/images/assistant.png', function (req, res) {
   res.sendFile(path.join(__dirname + '/assets/images/assistant.png'));
 });
 
+
 app.post('/submit-message', function(req, res){
-	type = classifier.classify(req.body.message);
-	res.json({inputMessage:req.body.message, replyMessage:replies[type]});
+	type = classifier.classify(req.body.message);console.log(type);
+	if(type){
+		res.json({inputMessage:req.body.message, replyMessage:replies[type]});
+		/*player.play('pop.mp3', function(err){console.log(err);
+		  if (err) throw err
+		});*/
+	} else {
+		res.json({inputMessage:req.body.message, replyMessage:'I did not get you. Can you please clarify.'});
+	}
 });
 
 app.listen(3000, function () {
