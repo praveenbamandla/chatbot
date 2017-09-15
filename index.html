@@ -59,6 +59,97 @@
 		<script src="./assets/jquery.min.js"></script>
 		<script src="./assets/jspdf.min.js"></script>
 		<script type="text/javascript">
+			var welcomeMessage = 'Welcome to personal assistance. How may I help you ?';
+
+			function sendMessage(){
+				var inputMessage = $("#inputMessage").val();
+				var data = {};
+				var sendDate = new Date().toUTCString();
+
+				$('#conversationBox').append(
+												'<div class="text-right">'
+												+   '<div class="bubble">'												
+												+      '<span>'+inputMessage+'</span>'
+												+      '<span class="icon user"></span>'
+												+   '</div>'
+												+   '<div class="datetime">'+sendDate+'</div>'
+												+'</div>'
+											);
+				data.message = inputMessage;
+
+				$.ajax({
+					type: 'POST',
+					url: '/submit-message',
+					data: data,
+					dataType: 'json',
+					success: function(res){
+						//alert('success');
+						//alert(res);
+						var receiveDate = new Date().toUTCString();
+						$('#conversationBox').append(
+														'<div class="text-left">'
+														+   '<div class="bubble">'
+														+      '<span class="icon assistant"></span>'
+														+      '<span>'+res.replyMessage+'</span>'														
+														+   '</div>'
+														+   '<div class="datetime">'+receiveDate+'</div>'
+														+'</div>'
+													);
+						$('#inputMessage').val('');
+					},
+					complete: function(){
+						//alert('complete');
+					}
+				});
+			}
+
+			$(document).ready(function(){
+				//alert('ready');
+				var curDate = new Date().toUTCString();
+				var specialElementHandlers = {
+					'#editor': function(element, renderer){
+						return true;
+					}
+				};
+
+				$('#conversationBox').append(
+												'<div class="text-left">'
+												+   '<div class="bubble">'
+												+      '<span class="icon assistant"></span>'
+												+      '<span>'+welcomeMessage+'</span>'
+												+   '</div>'
+												+   '<div class="datetime">'+curDate+'</div>'
+												+'</div>'
+											);
+
+				$('#goMessage').click(sendMessage);
+
+				$('#inputMessage').onEnter(sendMessage);
+
+				$('#clearMessage').click(function(){
+					$('#conversationBox').html('');
+				});
+
+				$('#exportMessage').click(function(){
+					//Export messages
+					var doc = new jsPDF();
+					doc.fromHTML($('#conversationBox').html(), 15, 15, {
+						'width': 170, 'elementHandlers': specialElementHandlers
+					});
+					doc.save('conversations.pdf');
+				});
+			});
+
+			(function($){
+				$.fn.onEnter = function(func){
+					this.bind('keypress', function(e){
+						if(e.keyCode === 13){
+							func.apply(this, [e]);
+						}
+					});
+					return this;
+				};
+			})(jQuery);
 		</script>
 	</body>
 </html>

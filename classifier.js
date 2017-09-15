@@ -13,7 +13,7 @@ module.exports = function(){
             'How are you ?',
             'Hello',
             'Hey'
-        ],
+        ]
        /* 'loan': [
             'loan',
             'process',
@@ -37,7 +37,7 @@ module.exports = function(){
         };
     };
 
-    this.classifyIntents = function(classifier, classifierS, classifierSS){
+    this.classifyIntents = function(classifier){
         /*classifier.addDocument(this.intents['greeting'].join(' '), 'greeting');
         classifier.addDocument(this.intents['loan'].join(' '), 'loan');
         classifier.addDocument(this.intents['interest'].join(' '), 'interest');
