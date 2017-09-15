@@ -42,7 +42,7 @@ var getTransferDetails = function(input) {
 	
 	transferRequest.inprogress = true;
 	
-	if(input=='cancel') {
+	if(input.indexOf('cancel')>=0) {
 		
 		
 		var msg =  'transfer cancelled.';
@@ -99,7 +99,7 @@ var getTransferDetails = function(input) {
 		return "you have only "+account.balance+" to transfer, can you enter other amount less than "+account.balance+" to transfer?";
 	}
 	
-	if(input=='cancel' || (transferRequest.to!='' && transferRequest.valid)) {
+	if(input.indexOf('cancel')>=0 || (transferRequest.to!='' && transferRequest.valid)) {
 		
 		account.balance-=transferRequest.amount;
 		var msg =  '<span class="success">transfer successful! ('+transferRequest.amount+' to '+transferRequest.to+'). Your reference number is 3432244. Remaining balance is '+account.balance+'</span>';
