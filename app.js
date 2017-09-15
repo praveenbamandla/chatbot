@@ -102,7 +102,7 @@ var getTransferDetails = function(input) {
 	if(input=='cancel' || (transferRequest.to!='' && transferRequest.valid)) {
 		
 		
-		var msg =  'transfer successful! ('+transferRequest.amount+' to '+transferRequest.to+'). Your reference number is 3432244';
+		var msg =  '<span class="success">transfer successful! ('+transferRequest.amount+' to '+transferRequest.to+'). Your reference number is 3432244</span>';
 		transferRequest = {
 			inprogress:false,
 			expected:'',  // can be amount ro toAccount
