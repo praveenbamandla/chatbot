@@ -24,6 +24,13 @@ module.exports = function(){
             'how much amount',
             'tenure',
             'what eligibility criteria'
+		],
+		'balance':[
+			'what is balance',
+			'balance amout',
+			'current balance',
+			'account balance',
+			'account statement'
 		]
     };
 
