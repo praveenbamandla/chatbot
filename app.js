@@ -103,6 +103,9 @@ var getTransferDetails = function(input) {
 		
 		account.balance-=transferRequest.amount;
 		var msg =  '<span class="success">transfer successful! ('+transferRequest.amount+' to '+transferRequest.to+'). Your reference number is 3432244. Remaining balance is '+account.balance+'</span>';
+		
+		console.log('POST /transfer-to/'++transferRequest.to+'/transferRequest.amount');
+		
 		transferRequest = {
 			inprogress:false,
 			expected:'',  // can be amount ro toAccount
