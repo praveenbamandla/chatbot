@@ -24,8 +24,17 @@ var transferRequest = {
 	valid: false
 };
 
+var loanRequest = {
+	inprogress:false,
+	expected:'',  // can be type	
+};
+
 var account = {
-	balance: 500
+	balance: 500,
+	canSendTo: {
+		praveen: 'NLV314455',
+		prasad:  'NLG424523'
+	}
 };
 
 
@@ -33,14 +42,30 @@ var getTransferDetails = function(input) {
 	
 	transferRequest.inprogress = true;
 	
+	if(input=='cancel') {
+		
+		
+		var msg =  'transfer cancelled.';
+		transferRequest = {
+			inprogress:false,
+			expected:'',  // can be amount ro toAccount
+			to: '',
+			amount: 0,
+			valid: false
+		};
+		return msg;
+	}
+	
+	
 	if(transferRequest.to=='') {
 		var tokens = input.match(/ to (.*)/);
 		if(tokens!=null) transferRequest.to = tokens[1].split(' ')[0];
 		if(transferRequest.to=='transfer' || transferRequest.to=='be' || transferRequest.to=='send') transferRequest.to = '';		
+		
 	}
 	
 	if(transferRequest.expected=='toAccount') {
-		transferRequest.to = input.replace('transfer to ','').replace('to ','').replace('send to ','').split(' ')[0];
+		transferRequest.to = input.replace('transfer to ','').replace('to ','').replace('send to ','').split(' ')[0];		
 	}
 	
 	if(transferRequest.amount==0 || transferRequest.expected=='amount') {
@@ -49,8 +74,20 @@ var getTransferDetails = function(input) {
 	}
 	
 	if(transferRequest.to=='') {
+		console.log(transferRequest.to);
 		transferRequest.expected = 'toAccount';
 		return "to whom do you want to transfer?";
+	} else {
+		if(!account.canSendTo[transferRequest.to]) {
+			transferRequest.expected = 'toAccount';
+			var msg = "You can only send money to one of your benficiary list, here is your benficiary list <br /><ul>";
+			 
+			for(var i in account.canSendTo) 
+				msg += '<li>'+i+' ('+account.canSendTo[i]+')</li>';		
+			msg += '</ul>to whom do you want to transfer?';
+			return msg;
+		}
+		
 	}
 	
 	if(transferRequest.amount==0) {
@@ -62,7 +99,7 @@ var getTransferDetails = function(input) {
 		return "you have only "+account.balance+" to transfer, can you enter other amount less than "+account.balance+" to transfer?";
 	}
 	
-	if(transferRequest.to!='' && transferRequest.valid) {
+	if(input=='cancel' || (transferRequest.to!='' && transferRequest.valid)) {
 		
 		
 		var msg =  'transfer successful! ('+transferRequest.amount+' to '+transferRequest.to+'). Your reference number is 3432244';
