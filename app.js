@@ -32,8 +32,9 @@ var loanRequest = {
 var account = {
 	balance: 500,
 	canSendTo: {
-		praveen: 'NLV314455',
-		prasad:  'NLG424523'
+		'praveen': 'NLV314455',
+		'prasad':  'NLG424523',
+		'pratap':  'NLG424523'
 	}
 };
 
@@ -78,12 +79,12 @@ var getTransferDetails = function(input) {
 		transferRequest.expected = 'toAccount';
 		return "to whom do you want to transfer?";
 	} else {
-		if(!account.canSendTo[transferRequest.to]) {
+		if(!account.canSendTo[transferRequest.to.toLowerCase()]) {
 			transferRequest.expected = 'toAccount';
 			var msg = 'You can only send money to one of your benficiary list, here is your benficiary list <br /><br /><ul class="list-unstyled">';
 			 
 			for(var i in account.canSendTo) 
-				msg += '<li>'+i+' ('+account.canSendTo[i]+')</li>';		
+				msg += '<li>'+capitalizeFirstLetter(i)+' ('+account.canSendTo[i]+')</li>';		
 			msg += '</ul>to whom do you want to transfer?';
 			return msg;
 		}
@@ -166,9 +167,19 @@ app.post('/submit-message', function(req, res){
 });
 
 app.post('/clear-message', function(req, res){
-	transferRequest.inprogress = false;
+	transferRequest = {
+		inprogress:false,
+		expected:'',  // can be amount ro toAccount
+		to: '',
+		amount: 0,
+		valid: false
+	};
 });
 
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!')
 });
+
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}

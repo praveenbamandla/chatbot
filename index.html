@@ -73,6 +73,11 @@
 				var inputMessage = $("#inputMessage").val();
 				var data = {};
 				var sendDate = new Date().toUTCString();
+				
+				if(inputMessage === ''){
+					alert('Please input text');
+					return;
+				}
 
 				$('#conversationBox').append(
 												'<div class="text-right">'
@@ -146,12 +151,6 @@
 				});
 
 				$('#exportMessage').click(function(){
-					//Export messages
-					/*var doc = new jsPDF();
-					doc.fromHTML($('#conversationBox').html(), 15, 15, {
-						'width': 170, 'elementHandlers': specialElementHandlers
-					});
-					doc.save('conversations.pdf');*/
 					
 					var pdf = new jsPDF('p', 'pt', 'letter');
 					var options = {
