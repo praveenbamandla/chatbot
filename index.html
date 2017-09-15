@@ -65,6 +65,7 @@
 		<div id="editor"></div>
 		<script src="./assets/jquery.min.js"></script>
 		<script src="./assets/jspdf.min.js"></script>
+		<script src="./assets/html2canvas.min.js"></script>
 		<script type="text/javascript">
 			var welcomeMessage = 'Welcome to personal assistance. How may I help you ?';
 
@@ -146,11 +147,19 @@
 
 				$('#exportMessage').click(function(){
 					//Export messages
-					var doc = new jsPDF();
+					/*var doc = new jsPDF();
 					doc.fromHTML($('#conversationBox').html(), 15, 15, {
 						'width': 170, 'elementHandlers': specialElementHandlers
 					});
-					doc.save('conversations.pdf');
+					doc.save('conversations.pdf');*/
+					
+					var pdf = new jsPDF('p', 'pt', 'letter');
+					var options = {
+						background: '#fff' //background is transparent if you don't set it, which turns it black for some reason.
+					};
+					pdf.addHTML($('#conversationBox')[0], options, function () {
+							pdf.save('conversations.pdf');
+					});					
 				});
 			});
 
