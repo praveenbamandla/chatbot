@@ -134,6 +134,10 @@ app.get('/assets/jspdf.min.js', function (req, res) {
   res.sendFile(path.join(__dirname + '/assets/jspdf.min.js'));
 });
 
+app.get('/assets/html2canvas.min.js', function (req, res) {
+  res.sendFile(path.join(__dirname + '/assets/html2canvas.min.js'));
+});
+
 app.get('/assets/images/user.png', function (req, res) {
   res.sendFile(path.join(__dirname + '/assets/images/user.png'));
 });
