@@ -145,7 +145,7 @@ app.get('/assets/images/assistant.png', function (req, res) {
 app.post('/submit-message', function(req, res){
 	
 	var type;
-	var reply = 'I did not get you. Can you please clarify.';
+	var reply = '';
 	
 	if(!transferRequest.inprogress) {
 		type = classifier.classify(req.body.message);
