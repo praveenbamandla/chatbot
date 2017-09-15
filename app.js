@@ -68,7 +68,7 @@ var getTransferDetails = function(input) {
 		transferRequest.to = input.replace('transfer to ','').replace('to ','').replace('send to ','').split(' ')[0];		
 	}
 	
-	if( (transferRequest.amount==0 && transferRequest.expected!='toAccount') || transferRequest.expected=='amount') {
+	if(transferRequest.amount==0 || transferRequest.expected=='amount') {
 		transferRequest.amount = Number(input.replace(/[^0-9\.-]+/g,""));
 		transferRequest.valid = (transferRequest.amount!=0 && transferRequest.amount<=account.balance);			
 	}
@@ -80,7 +80,7 @@ var getTransferDetails = function(input) {
 	} else {
 		if(!account.canSendTo[transferRequest.to]) {
 			transferRequest.expected = 'toAccount';
-			var msg = "You can only send money to one of your benficiary list, here is your benficiary list <br /><br /><ul>";
+			var msg = 'You can only send money to one of your benficiary list, here is your benficiary list <br /><br /><ul class="list-unstyled">';
 			 
 			for(var i in account.canSendTo) 
 				msg += '<li>'+i+' ('+account.canSendTo[i]+')</li>';		
@@ -101,9 +101,8 @@ var getTransferDetails = function(input) {
 	
 	if(input=='cancel' || (transferRequest.to!='' && transferRequest.valid)) {
 		
-		account.balance-=transferRequest.amount;
-		var msg =  'transfer successful! ('+transferRequest.amount+' to '+transferRequest.to+'). Your reference number is 3432244. Remaining balance is '+account.balance;
 		
+		var msg =  '<span class="success">transfer successful! ('+transferRequest.amount+' to '+transferRequest.to+'). Your reference number is 3432244</span>';
 		transferRequest = {
 			inprogress:false,
 			expected:'',  // can be amount ro toAccount
@@ -156,10 +155,14 @@ app.post('/submit-message', function(req, res){
 	
 	if(type=='fundTransfer') {
 		reply = getTransferDetails(req.body.message);
-		//console.log(transferRequest);
+		console.log(transferRequest);
 	}
-	console.log(transferRequest,type);
+	
 	res.json({inputMessage:req.body.message, replyMessage:reply==''?replies[type]:reply});
+});
+
+app.post('/clear-message', function(req, res){
+	transferRequest.inprogress = false;
 });
 
 app.listen(3000, function () {

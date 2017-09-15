@@ -36,6 +36,12 @@
 			.title {
 				font-size: 1.25em;
 			}
+			ul li, .success {
+				color: #065560;
+			}
+			ul {
+				list-style:none;
+			}
 		</style>
 	</head>
 	<body>
@@ -128,6 +134,13 @@
 
 				$('#clearMessage').click(function(){
 					$('#conversationBox').html('');
+					$.ajax({
+						type: 'POST',
+						url: '/clear-message',
+						dataType: 'json',
+						success: function(){
+						}
+					});
 				});
 
 				$('#exportMessage').click(function(){
