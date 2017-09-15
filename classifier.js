@@ -6,15 +6,16 @@ module.exports = function(){
             'I want to transfer funds',
             'P2P fund transfer',
             'want to transfer money',
-			'send money'
+			'send money',
+			'pay to'
         ],
         'greeting': [
             'Hi',
             'How are you ?',
             'Hello',
             'Hey'
-        ]
-       /* 'loan': [
+        ],
+        'loan': [
             'loan',
             'process',
 			'interest rates',
@@ -23,7 +24,7 @@ module.exports = function(){
             'how much amount',
             'tenure',
             'what eligibility criteria'
-		]*/
+		]
     };
 
     // Classifier
