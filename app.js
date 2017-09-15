@@ -165,6 +165,10 @@ app.post('/submit-message', function(req, res){
 		console.log(transferRequest);
 	}
 	
+	if(type=='balance') {
+		reply = 'your account balance as of now is '+account.balance;
+	}
+	
 	res.json({inputMessage:req.body.message, replyMessage:reply==''?replies[type]:reply});
 });
 
