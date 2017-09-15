@@ -36,11 +36,11 @@ var getTransferDetails = function(input) {
 	if(transferRequest.to=='') {
 		var tokens = input.match(/ to (.*)/);
 		if(tokens!=null) transferRequest.to = tokens[1].split(' ')[0];
-		if(transferRequest.to=='transfer' || transferRequest.to=='be') transferRequest.to = '';		
+		if(transferRequest.to=='transfer' || transferRequest.to=='be' || transferRequest.to=='send') transferRequest.to = '';		
 	}
 	
 	if(transferRequest.expected=='toAccount') {
-		transferRequest.to = input.replace('transfer to ','').split(' ')[0];
+		transferRequest.to = input.replace('transfer to ','').replace('to ','').replace('send to ','').split(' ')[0];
 	}
 	
 	if(transferRequest.amount==0 || transferRequest.expected=='amount') {
