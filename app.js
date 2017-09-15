@@ -80,7 +80,7 @@ var getTransferDetails = function(input) {
 	} else {
 		if(!account.canSendTo[transferRequest.to]) {
 			transferRequest.expected = 'toAccount';
-			var msg = "You can only send money to one of your benficiary list, here is your benficiary list <br /><ul>";
+			var msg = "You can only send money to one of your benficiary list, here is your benficiary list <br /><br /><ul>";
 			 
 			for(var i in account.canSendTo) 
 				msg += '<li>'+i+' ('+account.canSendTo[i]+')</li>';		
@@ -103,6 +103,7 @@ var getTransferDetails = function(input) {
 		
 		
 		var msg =  'transfer successful! ('+transferRequest.amount+' to '+transferRequest.to+'). Your reference number is 3432244';
+		account.balance-=transferRequest.amount;
 		transferRequest = {
 			inprogress:false,
 			expected:'',  // can be amount ro toAccount
@@ -155,7 +156,7 @@ app.post('/submit-message', function(req, res){
 	
 	if(type=='fundTransfer') {
 		reply = getTransferDetails(req.body.message);
-		console.log(transferRequest);
+		//console.log(transferRequest);
 	}
 	
 	res.json({inputMessage:req.body.message, replyMessage:reply==''?replies[type]:reply});
