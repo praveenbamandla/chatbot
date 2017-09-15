@@ -80,7 +80,7 @@ var getTransferDetails = function(input) {
 	} else {
 		if(!account.canSendTo[transferRequest.to]) {
 			transferRequest.expected = 'toAccount';
-			var msg = 'You can only send money to one of your benficiary list, here is your benficiary list <br /><ul class="list-unstyled">';
+			var msg = 'You can only send money to one of your benficiary list, here is your benficiary list <br /><br /><ul class="list-unstyled">';
 			 
 			for(var i in account.canSendTo) 
 				msg += '<li>'+i+' ('+account.canSendTo[i]+')</li>';		
