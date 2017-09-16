@@ -208,12 +208,13 @@ app.post('/submit-message', function(req, res){
 	var reply = '';
 	
 	type = classifier.classify(req.body.message);
+	console.log(type);
 	
 	if(transferRequest.inprogress) {
 		type = type=='loan'? type : 'fundTransfer';		
 	}
 	
-	if(!loanRequest.inprogress) {
+	if(loanRequest.inprogress) {
 		type = type=='fundTransfer'?type:'loan';
 	}
 	
@@ -246,6 +247,7 @@ app.post('/clear-message', function(req, res){
 
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!')
+  console.log(loanRequest,transferRequest);
 });
 
 function capitalizeFirstLetter(string) {

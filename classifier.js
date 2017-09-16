@@ -51,9 +51,13 @@ module.exports = function(){
         classifier.addDocument(this.intents['fundTransfer'].join(' '), 'fundTransfer');*/
 
         for(var intent in this.intents){
-            if(this.intents.hasOwnProperty(intent)){
-                classifier.addDocument(this.intents[intent].join(' '), intent);
-            }
+            //if(this.intents.hasOwnProperty(intent)){
+                for(var j in this.intents[intent]) {
+					console.log(this.intents[intent][j], intent);
+					classifier.addDocument(this.intents[intent][j], intent);
+				}
+				
+            //}
         }
 
         classifier.train();
