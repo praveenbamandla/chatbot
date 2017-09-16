@@ -10,8 +10,7 @@ module.exports = function(){
 			'pay to'
         ],
         'greeting': [
-            'Hi',
-            'How are you ?',
+            'Hi',            
             'Hello',
             'Hey'
         ],
@@ -28,7 +27,28 @@ module.exports = function(){
 			'balance amout',
 			'current balance',
 			'account balance',
-			'account statement'
+			'account statement',
+			'remaining balance',
+			'remaining sum'
+		],
+		'identity':[
+			'who are you',
+			'what can you do',
+			'where are you',
+			'need some information',
+			'how can you help me'
+			
+		],
+		'thankyou':[
+			'thanks',
+			'thank you',
+			'thank you very much'		
+		],
+		'bye':[
+			'exit',
+			'bye',
+			'good bye',
+			'goodbye'	
 		]
     };
 
@@ -39,7 +59,11 @@ module.exports = function(){
             'loan': 'Sure, I can help you with loan information, Which loan details do you need, for car or home?',
            // 'interest': 'car 10%, home 8%',
            // 'payment': 'can be opted with 6, 12 or 24 months',
-            'fundTransfer': 'Sure, I can help you transfer money.'
+            'fundTransfer': 'Sure, I can help you transfer money.',
+			'thankyou': 'Welcome! visit again',
+			'bye': 'Thank you, visit again',
+			'identity': 'I am a ChatBot, I can help you with balance enquiry, trasfer money and loan information.'
+			
         };
     };
 
