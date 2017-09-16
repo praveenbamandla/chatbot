@@ -10,7 +10,7 @@
 			}
 			.bubble {
 				background-color: #e0e0e0;
-				padding: 5px 10px;
+				padding: 5px 5px;
 				border-radius: 15px;
 				display: inline-block;
 				margin-bottom: 5px;
@@ -34,7 +34,7 @@
 				font-size: 0.625em;
 			}
 			.title {
-				font-size: 1.25em;
+				font-size: 1.5em;
 			}
 			ul li, .success {
 				color: #065560;
@@ -49,9 +49,13 @@
 		<div class="container">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<span class="title">Chatbot Assistance</span>
-					<button type="button" class="btn btn-default" id="clearMessage">Clear</button>
-					<button type="button" class="btn btn-default" id="exportMessage">Export</button>
+					<div class='btn-toolbar pull-right'>
+						<div class='btn-group'>
+						    <button type="button" class="btn btn-sm btn-default" id="clearMessage">Clear</button>
+						    <button type="button" class="btn btn-sm btn-default" id="exportMessage">Export</button>
+						</div>
+					</div>
+					<div class="title">Chatbot Assistance</div>
 				</div>
 				<div class="panel-body" id="conversationBox"></div>
 			</div>
@@ -112,6 +116,7 @@
 					},
 					complete: function(){
 						//alert('complete');
+						window.scrollTo(0,document.body.scrollHeight);
 					}
 				});
 			}
