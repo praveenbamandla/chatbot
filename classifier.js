@@ -17,13 +17,11 @@ module.exports = function(){
         ],
         'loan': [
             'loan',
-            'process',
-			'interest rates',
+            'loan interest rates',
             'mortgage',
-			'eligibility',
-            'how much amount',
-            'tenure',
-            'what eligibility criteria'
+			'loan eligibility',
+            'loan tenure',
+            'loan eligibility criteria'
 		],
 		'balance':[
 			'what is balance',
@@ -38,9 +36,9 @@ module.exports = function(){
     this.getIntentCategories = function(){
         return {
             'greeting':'Hello, How can I assist you?',
-            'loan': 'Loans are available for home, car',
-            'interest': 'car 10%, home 8%',
-            'payment': 'can be opted with 6, 12 or 24 months',
+            'loan': 'Sure, I can help you with loan information, Which loan details do you need, for car or home?',
+           // 'interest': 'car 10%, home 8%',
+           // 'payment': 'can be opted with 6, 12 or 24 months',
             'fundTransfer': 'Sure, I can help you transfer money.'
         };
     };

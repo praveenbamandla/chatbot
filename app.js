@@ -26,7 +26,7 @@ var transferRequest = {
 
 var loanRequest = {
 	inprogress:false,
-	expected:'',  // can be type	
+	type:'',  // can be car or home	
 };
 
 var account = {
@@ -37,6 +37,58 @@ var account = {
 		'pratap':  'NLG424523'
 	}
 };
+
+var getLoanDetails = function(input) {	
+	
+	loanRequest.inprogress = true;
+	
+	if(input.indexOf('cancel')>=0) {	
+		
+		var msg =  'Ok, do you want anything else?';
+		loanRequest = {
+			inprogress:false,
+			type:'' // can be car or home
+		};
+		return msg;
+	}
+	
+	if( input.indexOf('car')>=0 ) loanRequest.type = 'car';
+	if( input.indexOf('home')>=0 ) loanRequest.type = 'home';
+	
+	
+	if(loanRequest.type=='car') {
+		loanRequest = {
+			inprogress:false,
+			type:'' // can be car or home
+		};
+		return "Car loans has 8.5% interest, you can opt it for 1-5 years tenure.";	
+		
+	}
+	
+	if(loanRequest.type=='home') {
+		loanRequest = {
+			inprogress:false,
+			type:'' // can be car or home
+		};
+		return "Home loans has 8% interest, you can opt it for 5-25 years tenure. ";	
+	}
+	
+	if(input.indexOf('cancel')>=0) {	
+		
+		var msg =  'Ok, do you want anything else?';
+		loanRequest = {
+			inprogress:false,
+			type:'' // can be car or home
+		};
+		return msg;
+	}
+	
+	return "Which loan details do you need, for car or home?";
+	
+	
+}
+
+
 
 
 var getTransferDetails = function(input) {	
@@ -155,15 +207,24 @@ app.post('/submit-message', function(req, res){
 	var type;
 	var reply = '';
 	
-	if(!transferRequest.inprogress) {
-		type = classifier.classify(req.body.message);
-	} else {
-		type = 'fundTransfer';
+	type = classifier.classify(req.body.message);
+	
+	if(transferRequest.inprogress) {
+		type = type=='loan'? type : 'fundTransfer';		
+	}
+	
+	if(!loanRequest.inprogress) {
+		type = type=='fundTransfer'?type:'loan';
 	}
 	
 	if(type=='fundTransfer') {
 		reply = getTransferDetails(req.body.message);
 		console.log(transferRequest);
+	}
+	
+	if(type=='loan') {
+		reply = getLoanDetails(req.body.message);
+		console.log(loanRequest);
 	}
 	
 	if(type=='balance') {
