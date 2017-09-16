@@ -232,6 +232,14 @@ app.get('/assets/images/assistant.png', function (req, res) {
   res.sendFile(path.join(__dirname + '/assets/images/assistant.png'));
 });
 
+app.get('/assets/images/ABN-AMRO.png', function (req, res) {
+  res.sendFile(path.join(__dirname + '/assets/images/ABN-AMRO.png'));
+});
+
+app.get('/assets/images/ABN-AMRO-logo.png', function (req, res) {
+  res.sendFile(path.join(__dirname + '/assets/images/ABN-AMRO-logo.png'));
+});
+
 app.post('/submit-message', function(req, res){
 	
 	var type;

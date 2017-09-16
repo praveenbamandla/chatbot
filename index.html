@@ -6,7 +6,7 @@
 		<link rel="stylesheet" type="text/css" href="./assets/bootstrap.min.css" />
 		<style>
 			body {
-				padding-top: 50px;
+				
 			}
 			.bubble {
 				background-color: #e0e0e0;
@@ -43,10 +43,24 @@
 				list-style:none;
 				margin-left: 20px;
 			}
+			.logo {
+				float:left;
+				background-image: url("./assets/images/ABN-AMRO-logo.png");
+				width: 36px;
+				height: 36px;
+				margin-right: 5px;
+			}
+			.aab-header {
+				background-image: url("./assets/images/ABN-AMRO.png");
+				width: 236px;
+				height: 60px;
+				margin: 10px auto;
+			}
 		</style>
 	</head>
 	<body>
 		<div class="container">
+			<div class="aab-header"></div>
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<div class='btn-toolbar pull-right'>
@@ -55,7 +69,10 @@
 						    <button type="button" class="btn btn-sm btn-default" id="exportMessage">Export</button>
 						</div>
 					</div>
-					<div class="title">Chatbot Assistance</div>
+					<div class="title">
+						<span class="logo"></span>
+						<span>Chatbot Assistance</span>
+					</div>
 				</div>
 				<div class="panel-body" id="conversationBox"></div>
 			</div>
