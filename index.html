@@ -72,7 +72,10 @@
 		<script src="./assets/html2canvas.min.js"></script>
 		<script type="text/javascript">
 			var welcomeMessage = 'Welcome to personal assistance. How may I help you ?';
-
+			function capitalizeFirstLetter(string) {
+				return string.charAt(0).toUpperCase() + string.slice(1);
+			}
+			
 			function sendMessage(){
 				var inputMessage = $("#inputMessage").val();
 				var data = {};
@@ -107,7 +110,7 @@
 														'<div class="text-left">'
 														+   '<div class="bubble">'
 														+      '<span class="icon assistant"></span>'
-														+      '<span>'+res.replyMessage+'</span>'														
+														+      '<span>'+capitalizeFirstLetter(res.replyMessage)+'</span>'														
 														+   '</div>'
 														+   '<div class="datetime">'+receiveDate+'</div>'
 														+'</div>'

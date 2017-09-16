@@ -112,7 +112,20 @@ var getTransferDetails = function(input) {
 	
 	if(transferRequest.to=='') {
 		var tokens = input.match(/ to (.*)/);
-		if(tokens!=null) transferRequest.to = tokens[1].split(' ')[0];
+		if(tokens!=null) {
+			if(tokens[1].indexOf(' to ')>=0) {
+				//console.log('gggggg');
+				tokens = tokens[1].match(/ to (.*)/);
+				if(tokens!=null) transferRequest.to = tokens[1].split(' ')[0];
+			} else {
+				transferRequest.to = tokens[1].split(' ')[0];
+			}
+		}
+		
+		
+		//console.log('here22',transferRequest.to);
+		
+		//console.log();
 		if(transferRequest.to=='transfer' || transferRequest.to=='be' || transferRequest.to=='send') transferRequest.to = '';		
 		
 	}
@@ -121,15 +134,15 @@ var getTransferDetails = function(input) {
 		transferRequest.to = input.replace('transfer to ','').replace('to ','').replace('send to ','').split(' ')[0];		
 	}
 	
-	if(transferRequest.amount==0 || transferRequest.expected=='amount') {
+	if(transferRequest.amount==0 && ( transferRequest.expected=='' ||  transferRequest.expected=='amount' ) ) {
 		transferRequest.amount = Number(input.replace(/[^0-9\.-]+/g,""));
 		transferRequest.valid = (transferRequest.amount!=0 && transferRequest.amount<=account.balance);			
 	}
 	
 	if(transferRequest.to=='') {
-		console.log(transferRequest.to);
+		//console.log(transferRequest.to);
 		transferRequest.expected = 'toAccount';
-		return "to whom do you want to transfer?";
+		return "To whom do you want to transfer?";
 	} else {
 		if(!account.canSendTo[transferRequest.to.toLowerCase()]) {
 			transferRequest.expected = 'toAccount';
@@ -137,7 +150,7 @@ var getTransferDetails = function(input) {
 			 
 			for(var i in account.canSendTo) 
 				msg += '<li>'+capitalizeFirstLetter(i)+' ('+account.canSendTo[i]+')</li>';		
-			msg += '</ul>to whom do you want to transfer?';
+			msg += '</ul>To whom do you want to transfer?';
 			return msg;
 		}
 		
@@ -155,9 +168,9 @@ var getTransferDetails = function(input) {
 	if(input.indexOf('cancel')>=0 || (transferRequest.to!='' && transferRequest.valid)) {
 		
 		account.balance-=transferRequest.amount;
-		var msg =  '<span class="success">transfer successful! ('+transferRequest.amount+' to '+transferRequest.to+'). Your reference number is 3432244. Remaining balance is '+account.balance+'</span>';
+		var msg =  '<span class="success">Transfer successful! ('+transferRequest.amount+' to '+transferRequest.to+'). Your reference number is 3432244. Remaining balance is '+account.balance+'</span>';
 		
-		console.log('POST /transfer-to/'+transferRequest.to+'/transferRequest.amount');
+		console.log('POST /transfer-to?username='+transferRequest.to+'&amount='+transferRequest.amount);
 		
 		transferRequest = {
 			inprogress:false,
@@ -208,7 +221,7 @@ app.post('/submit-message', function(req, res){
 	var reply = '';
 	
 	type = classifier.classify(req.body.message);
-	console.log(type);
+	//console.log(type);
 	
 	if(transferRequest.inprogress) {
 		type = type=='loan'? type : 'fundTransfer';		
@@ -220,15 +233,16 @@ app.post('/submit-message', function(req, res){
 	
 	if(type=='fundTransfer') {
 		reply = getTransferDetails(req.body.message);
-		console.log(transferRequest);
+		//console.log(transferRequest);
 	}
 	
 	if(type=='loan') {
 		reply = getLoanDetails(req.body.message);
-		console.log(loanRequest);
+		//console.log(loanRequest);
 	}
 	
 	if(type=='balance') {
+		console.log('GET /balance');
 		reply = 'your account balance as of now is '+account.balance;
 	}
 	
@@ -246,8 +260,8 @@ app.post('/clear-message', function(req, res){
 });
 
 app.listen(3000, function () {
-  console.log('Example app listening on port 3000!')
-  console.log(loanRequest,transferRequest);
+  console.log('Chatbot app listening on port 3000!')
+  //console.log(loanRequest,transferRequest);
 });
 
 function capitalizeFirstLetter(string) {
