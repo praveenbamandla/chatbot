@@ -53,7 +53,7 @@ var getLoanDetails = function(input) {
 	}
 	
 	if( input.indexOf('car')>=0 ) loanRequest.type = 'car';
-	if( input.indexOf('home')>=0 ) loanRequest.type = 'home';
+	if( input.indexOf('home')>=0 || input.indexOf('house')>=0 ) loanRequest.type = 'home';
 	
 	
 	if(loanRequest.type=='car') {
