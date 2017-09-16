@@ -136,7 +136,7 @@ var getTransferDetails = function(input) {
 		transferRequest.to = input.replace('transfer to ','').replace('to ','').replace('send to ','').split(' ')[0];		
 	}
 	
-	if(transferRequest.amount==0 && ( transferRequest.expected=='' ||  transferRequest.expected=='amount' ) ) {
+	if(transferRequest.amount==0 || ( transferRequest.expected=='' ||  transferRequest.expected=='amount' ) ) {
 		transferRequest.amount = Number(input.replace(/[^0-9\.-]+/g,""));
 		transferRequest.valid = (transferRequest.amount!=0 && transferRequest.amount<=account.balance);			
 	}
@@ -164,6 +164,7 @@ var getTransferDetails = function(input) {
 	}
 	
 	if(!transferRequest.valid) {
+		transferRequest.expected = 'amount';
 		return "you have only "+account.balance+" to transfer, can you enter other amount less than "+account.balance+" to transfer?";
 	}
 	
@@ -264,7 +265,7 @@ app.post('/submit-message', function(req, res){
 	}
 	
 	
-	
+	console.log(transferRequest);
 	res.json({inputMessage:req.body.message, replyMessage:reply==''?replies[type]:reply});
 });
 
