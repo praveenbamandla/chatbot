@@ -21,7 +21,8 @@ var transferRequest = {
 	expected:'',  // can be amount ro toAccount
 	to: '',
 	amount: 0,
-	valid: false
+	valid: false,
+	confirmed:false
 };
 
 var loanRequest = {
@@ -95,7 +96,7 @@ var getTransferDetails = function(input) {
 	
 	transferRequest.inprogress = true;
 	
-	if(input.indexOf('cancel')>=0) {
+	if(input.indexOf('cancel')>=0 || (transferRequest.expected=='confirmation' && input.toLowerCase().indexOf('no')>=0)  ) {
 		
 		
 		var msg =  'transfer cancelled.';
@@ -104,7 +105,8 @@ var getTransferDetails = function(input) {
 			expected:'',  // can be amount ro toAccount
 			to: '',
 			amount: 0,
-			valid: false
+			valid: false,
+			confirmed:false
 		};
 		return msg;
 	}
@@ -165,21 +167,36 @@ var getTransferDetails = function(input) {
 		return "you have only "+account.balance+" to transfer, can you enter other amount less than "+account.balance+" to transfer?";
 	}
 	
+	
+	if(transferRequest.expected=='confirmation') {
+		if(input.toLowerCase().indexOf('yes')>=0) transferRequest.confirmed = true;
+		
+	}
+	
 	if(input.indexOf('cancel')>=0 || (transferRequest.to!='' && transferRequest.valid)) {
 		
-		account.balance-=transferRequest.amount;
-		var msg =  '<span class="success">Transfer successful! ('+transferRequest.amount+' to '+transferRequest.to+'). Your reference number is 3432244. Remaining balance is '+account.balance+'</span>';
+		if(transferRequest.confirmed) {
 		
-		console.log('POST /transfer-to?username='+transferRequest.to+'&amount='+transferRequest.amount);
+			account.balance-=transferRequest.amount;
+			var msg =  '<span class="success">Transfer successful! ('+transferRequest.amount+' to '+transferRequest.to+'). Your reference number is 3432244. Remaining balance is '+account.balance+'</span>';
+			
+			console.log('POST /transfer-to?username='+transferRequest.to+'&amount='+transferRequest.amount);
+			
+			transferRequest = {
+				inprogress:false,
+				expected:'',  // can be amount ro toAccount
+				to: '',
+				amount: 0,
+				valid: false,
+				confirmed:false
+			};
+			return msg;
 		
-		transferRequest = {
-			inprogress:false,
-			expected:'',  // can be amount ro toAccount
-			to: '',
-			amount: 0,
-			valid: false
-		};
-		return msg;
+		} else {
+			transferRequest.expected = 'confirmation';
+			return "Are you sure you want to transfer "+transferRequest.amount+" to "+transferRequest.to+"? [yes/no]";			
+		}
+		
 	}
 	
 }
