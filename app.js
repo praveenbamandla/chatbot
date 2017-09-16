@@ -43,7 +43,7 @@ var getLoanDetails = function(input) {
 	
 	loanRequest.inprogress = true;
 	
-	if(input.indexOf('cancel')>=0) {	
+	if(input.toLowerCase().indexOf('cancel')>=0) {	
 		
 		var msg =  'Ok, do you want anything else?';
 		loanRequest = {
@@ -53,8 +53,8 @@ var getLoanDetails = function(input) {
 		return msg;
 	}
 	
-	if( input.indexOf('car')>=0 ) loanRequest.type = 'car';
-	if( input.indexOf('home')>=0 || input.indexOf('house')>=0 ) loanRequest.type = 'home';
+	if( input.toLowerCase().indexOf('car')>=0 ) loanRequest.type = 'car';
+	if( input.toLowerCase().indexOf('home')>=0 || input.indexOf('house')>=0 ) loanRequest.type = 'home';
 	
 	
 	if(loanRequest.type=='car') {
@@ -74,7 +74,7 @@ var getLoanDetails = function(input) {
 		return "Home loans has 8% interest, you can opt it for 5-25 years tenure. ";	
 	}
 	
-	if(input.indexOf('cancel')>=0) {	
+	if(input.toLowerCase().indexOf('cancel')>=0) {	
 		
 		var msg =  'Ok, do you want anything else?';
 		loanRequest = {
@@ -96,7 +96,7 @@ var getTransferDetails = function(input) {
 	
 	transferRequest.inprogress = true;
 	
-	if(input.indexOf('cancel')>=0 || (transferRequest.expected=='confirmation' && input.toLowerCase().indexOf('no')>=0)  ) {
+	if(input.toLowerCase().indexOf('cancel')>=0 || (transferRequest.expected=='confirmation' && input.toLowerCase().indexOf('no')>=0)  ) {
 		
 		
 		var msg =  'transfer cancelled.';
@@ -173,7 +173,7 @@ var getTransferDetails = function(input) {
 		
 	}
 	
-	if(input.indexOf('cancel')>=0 || (transferRequest.to!='' && transferRequest.valid)) {
+	if(input.toLowerCase().indexOf('cancel')>=0 || (transferRequest.to!='' && transferRequest.valid)) {
 		
 		if(transferRequest.confirmed) {
 		
@@ -246,7 +246,7 @@ app.post('/submit-message', function(req, res){
 	var reply = '';
 	
 	type = classifier.classify(req.body.message);
-	//console.log(type);
+	console.log(type);
 	
 	if(transferRequest.inprogress) {
 		type = type=='loan'? type : 'fundTransfer';		
@@ -270,6 +270,8 @@ app.post('/submit-message', function(req, res){
 		console.log('GET /balance');
 		reply = 'your account balance as of now is '+account.balance;
 	}
+	
+	
 	
 	res.json({inputMessage:req.body.message, replyMessage:reply==''?replies[type]:reply});
 });
