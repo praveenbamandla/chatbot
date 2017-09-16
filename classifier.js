@@ -33,8 +33,7 @@ module.exports = function(){
 		],
 		'identity':[
 			'who are you',
-			'what can you do',
-			'where are you',
+			'what can you do',			
 			'need some information',
 			'how can you help me'
 			

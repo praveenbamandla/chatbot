@@ -243,11 +243,19 @@ app.get('/assets/images/ABN-AMRO-logo.png', function (req, res) {
 
 app.post('/submit-message', function(req, res){
 	
+	var resultData;
 	var type;
+	var maxWeight;
 	var reply = '';
 	
-	type = classifier.classify(req.body.message);
-	console.log(type);
+	resultData = classifier.classify(req.body.message);
+	type = resultData.label;
+	maxWeight = resultData.max;
+	console.log(type,maxWeight);
+	
+	if(maxWeight<0.3) {
+		reply = 'I did not understand you, can you rephrase your query.';
+	}
 	
 	if(transferRequest.inprogress) {
 		type = type=='loan'? type : 'fundTransfer';		
@@ -271,9 +279,8 @@ app.post('/submit-message', function(req, res){
 		console.log('GET /balance');
 		reply = 'your account balance as of now is '+account.balance;
 	}
-	
-	
-	console.log(transferRequest);
+		
+	//console.log(transferRequest);
 	res.json({inputMessage:req.body.message, replyMessage:reply==''?replies[type]:reply});
 });
 
