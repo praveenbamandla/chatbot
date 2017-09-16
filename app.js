@@ -62,7 +62,7 @@ var getLoanDetails = function(input) {
 			inprogress:false,
 			type:'' // can be car or home
 		};
-		return "Car loans has 8.5% interest, you can opt it for 1-5 years tenure.";	
+		return "Car loans has 8.5% interest, you can opt it for 1-5 years tenure. refer <a target='_blank' href='https://thebanks.eu/compare-banking-products/car-loans/Netherlands'>https://thebanks.eu/compare-banking-products/car-loans/Netherlands</a>";	
 		
 	}
 	
@@ -71,7 +71,7 @@ var getLoanDetails = function(input) {
 			inprogress:false,
 			type:'' // can be car or home
 		};
-		return "Home loans has 8% interest, you can opt it for 5-25 years tenure. ";	
+		return "Home loans has 8% interest, you can opt it for 5-25 years tenure. refer <a target='_blank' href='https://www.abnamro.nl/en/personal/mortgages/index.html'>https://www.abnamro.nl/en/personal/mortgages/index.html</a>";	
 	}
 	
 	if(input.toLowerCase().indexOf('cancel')>=0) {	
